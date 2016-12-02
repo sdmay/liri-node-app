@@ -6,10 +6,10 @@ var fs = require('fs');
 var omdb = require('omdb');
 // var keys = require('keys.js')
 var nodeArgs = process.argv;
-  var query = "";
-       for (var i=3; i<nodeArgs.length; i++){
-
-
+var query = "";
+      
+      for (var i=3; i<nodeArgs.length; i++){
+         
 	    query = query + " " + nodeArgs[i];
 
       }
@@ -31,9 +31,12 @@ var app = {
   twitter.get('statuses/user_timeline', params, function(error, tweets, response) {
   if (!error) {
     console.log(tweets);
-    app.saveData(tweets);
+    tweets.forEach(function(object) {
+      console.log(object.text)
+    app.saveData(object.text);
+  });
   }
-});
+  });
 },
 
 // spotify-this-song '<song name here>'
@@ -122,12 +125,19 @@ var app = {
        
         var work = data.split(',');
         console.log(work)
-         for (var i = 0; i < work.length; i++) {
- 
-       app[work++];
-   
-       app.saveData(work)
+        for (var i=0; i<nodeArgs.length; i++){
+         
+	   
+
+      app[work + " " + nodeArgs[i]];
+
       }
+      //  for (var i = 0; i < work.length; i++) {
+ 
+      //  app[work[i]]();
+           
+       app.saveData(work)
+      // }
       });
     },
     
@@ -137,7 +147,17 @@ var app = {
           console.log(err);
         }
      });
+   },
+
+// Delete the data from the "log.txt"
+
+   "delete-data": function(){
+     fs.writeFile('log.txt', '', function()
+     {console.log('Done')})
+
    }
     }
+
+    
 
     app[process.argv[2]](process.argv[3]);
