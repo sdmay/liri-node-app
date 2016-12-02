@@ -136,6 +136,13 @@ var app = {
 
  var movieData = JSON.parse(info); 
 
+ if (movieData.Title == "Mr. Nobody"){
+
+           console.log("If you haven't watched Mr. Nobody, then you should, http://www.imdb.com/title/tt0485947/ on Netflix!")
+       
+ }
+ else{
+
          console.log('Title: ' + movieData.Title);
          console.log('Year: ' + movieData.Year);
          console.log('IMDB Rating: ' + movieData.imdbRating);
@@ -147,11 +154,9 @@ var app = {
          console.log('Rotten Tomatoes URL: ' + movieData.tomatoURL);
 
          app.saveData(movieData);
+ }
+       }
        
-       }
-       else {
-           console.log("If you haven't watched Mr. Nobody, then you should, http://www.imdb.com/title/tt0485947/ on Netflix!")
-       }
      });
    },
 
@@ -172,15 +177,24 @@ var app = {
      fs.readFile('random.txt', 'utf8', function(err, data) {
        if(err) throw err;
        
-       var s = data.split(",")
+      //  var s = data.split(",")
 
-       for (var i = 0; i < s.length; i++) {
+      //  for (var i = 0; i < cmds.length; i++) {
 
-	     console.log(s[i]);};
+	    //  console.log(s[i]);
+
        
+
+      // s[i] = [process.argv[2]](process.argv[3]);
+      // app.s[i]();
+
+        var cmds = data.toString().split(',');
+        console.log(cmds)
+ 
+       app[cmds[0]];
     //    var words = data.toString().split('');
     //    console.log(data.toString());
-       app.saveData(s[i])
+       app.saveData(cmds)
       });
     },
     
