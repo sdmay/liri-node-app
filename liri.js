@@ -193,5 +193,5 @@ var app = {
    }
     }
 
-    app[process.argv[2]]();
+    // app[process.argv[2]]();
     app[process.argv[2]](process.argv[3]);
