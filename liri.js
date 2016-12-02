@@ -120,13 +120,13 @@ var app = {
      fs.readFile('random.txt', 'utf8', function(err, data) {
        if(err) throw err;
        
-        var cmds = data.split(',');
-        console.log(cmds)
-         for (var i = 0; i < cmds.length; i++) {
+        var work = data.split(',');
+        console.log(work)
+         for (var i = 0; i < work.length; i++) {
  
-       app[cmds++];
+       app[work++];
    
-       app.saveData(cmds)
+       app.saveData(work)
       }
       });
     },
