@@ -13,7 +13,7 @@ var nodeArgs = process.argv;
 	    query = query + " " + nodeArgs[i];
 
       }
-      console.log(query)
+      // console.log(query)
 
 var twitter = new twit({
         consumer_key: 'y31gvwer7zSp1sjQue2xKGbFn',
@@ -25,17 +25,28 @@ var twitter = new twit({
 
 var app = {
 "my-tweets": function (){ 
-    twitter.get('search/tweets',{q: "ScottDMay", count:10}, function(err, myData, response){
-        if(!err){
 
-            //  myData.forEach(function(obj) {
-            //    console.log('Tweet: ' + obj.text);
-            //  });
+  var params = {screen_name: 'ScottDMay', count: 20};
+twitter.get('statuses/user_timeline', params, function(error, tweets, response) {
+  if (!error) {
+    console.log(tweets);
+    console.log(tweets.user)
+  
+  app.saveData(tweets);
+  }
+});
+},
+    // twitter.get('search/tweets',{q: "ScottDMay", count:20}, function(err, myData, response){
+    //     if(!err){
 
-            var tweetData = JSON.stringify(myData, null, 2);
+    //         //  myData.forEach(function(obj) {
+    //         //    console.log('Tweet: ' + obj.text);
+    //         //  });
 
-            var tweet = tweetData;
-            console.log(tweet)
+    //         var tweetData = JSON.stringify(myData, null, 2);
+    //         console.log(tweetData)
+    //         var tweet = tweetData;
+    //         console.log(tweet)
             // var me = tweet.text;
             // console.log(me)
 
@@ -51,13 +62,14 @@ var app = {
         
 
         // console.log(tweetData.statuses)
-        app.saveData(myData);
         
-        }
+        
+        // }
+
       
         
-});
-},
+// });
+// },
 
 
 // spotify-this-song '<song name here>'
@@ -75,7 +87,8 @@ var app = {
 
         spotify.search({ type: 'track', query: (query || "The Sign Ace of Base") }, function(err, data){
          var record = data.tracks.items[0];
- 
+         
+        console.log(""); 
         console.log('Artist: ' + record.artists[0].name);
         console.log('Name: ' + record.name);
         console.log('Link: ' + record.preview_url);
@@ -137,12 +150,12 @@ var app = {
  var movieData = JSON.parse(info); 
 
  if (movieData.Title == "Mr. Nobody"){
-
+           console.log(""); 
            console.log("If you haven't watched Mr. Nobody, then you should, http://www.imdb.com/title/tt0485947/ on Netflix!")
        
  }
  else{
-
+         console.log(""); 
          console.log('Title: ' + movieData.Title);
          console.log('Year: ' + movieData.Year);
          console.log('IMDB Rating: ' + movieData.imdbRating);
