@@ -28,18 +28,27 @@ var app = {
     twitter.get('search/tweets',{q: "ScottDMay", count:10}, function(err, myData, response){
         if(!err){
 
-            
+            //  myData.forEach(function(obj) {
+            //    console.log('Tweet: ' + obj.text);
+            //  });
 
-            var tweetData = JSON.stringify(myData.statuses, null, 2);
+            var tweetData = JSON.stringify(myData, null, 2);
+
+            var tweet = tweetData;
+            console.log(tweet)
+            // var me = tweet.text;
+            // console.log(me)
+
+            
             // var work= tweetData.text
         // myTweet = tweetData.text;
         // myData.forEach(function(obj){
     // console.log(obj.text);
         // });
         //  var tweetData = JSON.parse(myData);
-        console.log(tweetData)
-        console.log(myData);
-        console.log(response.text)
+        // console.log(tweetData)
+        // console.log(myData);
+        
 
         // console.log(tweetData.statuses)
         app.saveData(myData);
@@ -63,49 +72,48 @@ var app = {
 // "The Sign" by Ace of Base
 
   "spotify-this-song": function() {
-      
 
-
-     spotify.search({ type: 'track', query: query }, function(err, data) {
-       
-  //     var nodeArgs = process.argv;
-    
-       
-    
-
-       if(data.tracks.items.length > 0) {
+        spotify.search({ type: 'track', query: (query || "The Sign Ace of Base") }, function(err, data){
          var record = data.tracks.items[0];
  
         console.log('Artist: ' + record.artists[0].name);
         console.log('Name: ' + record.name);
         console.log('Link: ' + record.preview_url);
         console.log('Album: ' + record.album.name);
-     
-        
-      } 
-         else{
-          console.log(err);
-          query = "The Sign Ace of Base";
-          var ace = data.tracks.items[0];
-           return;
-       
-        console.log('Artist: ' + ace.artists[0].name);
-        console.log('Name: ' + ace.name);
-        console.log('Link: ' + ace.preview_url);
-        console.log('Album: ' + ace.album.name);
-        // console.log('Artist: ' + "Ace of Base");
-        // console.log('Name: ' + "The Sign");
-        // console.log('Link: ' + record.preview_url);
-        // console.log('Album: ' + "The Sign (US Album) [Remastered]");
-       }
+          
+        app.saveData(record)
+      });
 
-      app.saveData(record)
- 
- 
-     });
   },
+      
+      //     if(query <= 0){
+      //     spotify.search({ type: 'track', query: "The Sign Ace of Base" }, function(err, data) {
 
-// movie-this '<movie name here>'
+      //     var ace = data.tracks.items[0];
+                 
+      //   console.log('Artist: ' + ace.artists[0].name);
+      //   console.log('Name: ' + ace.name);
+      //   console.log('Link: ' + ace.preview_url);
+      //   console.log('Album: ' + ace.album.name);
+      //      });
+      //   }
+
+      //  else {
+      //     spotify.search({ type: 'track', query: query }, function(err, data){
+      //    var record = data.tracks.items[0];
+ 
+      //   console.log('Artist: ' + record.artists[0].name);
+      //   console.log('Name: ' + record.name);
+      //   console.log('Link: ' + record.preview_url);
+      //   console.log('Album: ' + record.album.name);
+          
+      //   app.saveData(record)
+      // });
+  
+      
+ 
+  
+  // movie-this '<movie name here>'
 
 // This will output the following information to your terminal/bash window:
 
@@ -123,28 +131,10 @@ var app = {
 // It's on Netflix!
 
  "movie-this": function() {
-     request('http://www.omdbapi.com/?t=' + query +'&tomatoes=true', function (error, response, info) {
+     request('http://www.omdbapi.com/?t=' + (query || "Mr. Nobody") +'&tomatoes=true', function (error, response, info) {
        if (!error && response.statusCode == 200) {
 
-          
-  
-//            for (var i=2; i<nodeArgs.length; i++){
-
-//     if (i>2 && i< nodeArgs.length){
-
-//         movieData = movieData + "+" + nodeArgs[i];
-
-//     }
-
-//     else {
-
-//         movieData = movieData + nodeArgs[i];
-//     }
-// }
-
- var movieData = JSON.parse(info);
-    
- 
+ var movieData = JSON.parse(info); 
 
          console.log('Title: ' + movieData.Title);
          console.log('Year: ' + movieData.Year);
@@ -184,9 +174,9 @@ var app = {
        
        var s = data.split(",")
 
-    for (var i = 0; i < s.length; i++) {
+       for (var i = 0; i < s.length; i++) {
 
-	    console.log(s[i]);};
+	     console.log(s[i]);};
        
     //    var words = data.toString().split('');
     //    console.log(data.toString());
