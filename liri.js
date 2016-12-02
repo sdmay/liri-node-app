@@ -1,10 +1,19 @@
-
+"use strict";
 var twit = require('twitter');
 var spotify = require('spotify');
 var request = require('request');
 var fs = require('fs');
+var omdb = require('omdb');
 // var args = [process.args[2]]
 var nodeArgs = process.argv;
+  var query = "";
+       for (var i=3; i<nodeArgs.length; i++){
+
+	// Build a string with the address.
+	    query = query + " " + nodeArgs[i];
+
+      }
+      console.log(query)
 
 var twitter = new twit({
         consumer_key: 'y31gvwer7zSp1sjQue2xKGbFn',
@@ -16,22 +25,27 @@ var twitter = new twit({
 
 var app = {
 "my-tweets": function (){ 
-    twitter.get('search/tweets',{q: "ScottDMay", count:20}, function(err, myData, response){
+    twitter.get('search/tweets',{q: "ScottDMay", count:10}, function(err, myData, response){
         if(!err){
 
             
 
-            // var tweetData = JSON.parse(myData);
-        myTweet = myData.statuses;
+            var tweetData = JSON.stringify(myData.statuses, null, 2);
+            // var work= tweetData.text
+        // myTweet = tweetData.text;
         // myData.forEach(function(obj){
     // console.log(obj.text);
         // });
         //  var tweetData = JSON.parse(myData);
+        console.log(tweetData)
         console.log(myData);
+        console.log(response.text)
+
+        // console.log(tweetData.statuses)
         app.saveData(myData);
         
         }
-        
+      
         
 });
 },
@@ -48,26 +62,16 @@ var app = {
 
 // "The Sign" by Ace of Base
 
-  "spotify-this-song": function(keyword) {
-      var args = [process.argv[3]] 
-     spotify.search({ type: 'track', query: keyword }, function(err, data) {
-       if ( err ) {
-          console.log('Error occurred: ' + err);
-           return;
-       }
-       
-       if(args === null){
+  "spotify-this-song": function() {
+      
 
-        keyword === "The Sign Ace of Base";
-        console.log('Artist: ' + record.artists[0].name);
-        console.log('Name: ' + record.name);
-        console.log('Link: ' + record.preview_url);
-        console.log('Album: ' + record.album.name);
-        // console.log('Artist: ' + "Ace of Base");
-        // console.log('Name: ' + "The Sign");
-        // console.log('Link: ' + record.preview_url);
-        // console.log('Album: ' + "The Sign (US Album) [Remastered]");
-       }
+
+     spotify.search({ type: 'track', query: query }, function(err, data) {
+       
+  //     var nodeArgs = process.argv;
+    
+       
+    
 
        if(data.tracks.items.length > 0) {
          var record = data.tracks.items[0];
@@ -79,9 +83,21 @@ var app = {
      
         
       } 
-      else {
-        console.log('None Found');
-      }
+         else{
+          console.log(err);
+          query = "The Sign Ace of Base";
+          var ace = data.tracks.items[0];
+           return;
+       
+        console.log('Artist: ' + ace.artists[0].name);
+        console.log('Name: ' + ace.name);
+        console.log('Link: ' + ace.preview_url);
+        console.log('Album: ' + ace.album.name);
+        // console.log('Artist: ' + "Ace of Base");
+        // console.log('Name: ' + "The Sign");
+        // console.log('Link: ' + record.preview_url);
+        // console.log('Album: ' + "The Sign (US Album) [Remastered]");
+       }
 
       app.saveData(record)
  
@@ -106,8 +122,8 @@ var app = {
 // If you haven't watched "Mr. Nobody," then you should: http://www.imdb.com/title/tt0485947/
 // It's on Netflix!
 
- "movie-this": function(query) {
-     request('http://www.omdbapi.com/?t=' + (query) +'&tomatoes=true', function (error, response, info) {
+ "movie-this": function() {
+     request('http://www.omdbapi.com/?t=' + query +'&tomatoes=true', function (error, response, info) {
        if (!error && response.statusCode == 200) {
 
           
@@ -125,7 +141,7 @@ var app = {
 //         movieData = movieData + nodeArgs[i];
 //     }
 // }
-if(query = true){
+
  var movieData = JSON.parse(info);
     
  
@@ -142,9 +158,9 @@ if(query = true){
 
          app.saveData(movieData);
        
-       }}
+       }
        else {
-           console.log("If you haven't watched Mr. Nobody, then you should: http://www.imdb.com/title/tt0485947/ on Netflix!")
+           console.log("If you haven't watched Mr. Nobody, then you should, http://www.imdb.com/title/tt0485947/ on Netflix!")
        }
      });
    },
@@ -171,7 +187,7 @@ if(query = true){
     for (var i = 0; i < s.length; i++) {
 
 	    console.log(s[i]);};
- 
+       
     //    var words = data.toString().split('');
     //    console.log(data.toString());
        app.saveData(s[i])

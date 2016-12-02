@@ -1,0 +1,24 @@
+{
+  "name": "liri",
+  "version": "1.0.0",
+  "description": "Liri Query",
+  "main": "liri.js",
+  "scripts": {
+    "test": "my-tweets"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sdmay/liri-node-app.git"
+  },
+  "keywords": [
+    "Twitter",
+    "Spotify",
+    "iMDB"
+  ],
+  "author": "Scott May",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sdmay/liri-node-app/issues"
+  },
+  "homepage": "https://github.com/sdmay/liri-node-app#readme"
+}
