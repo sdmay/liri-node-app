@@ -48,7 +48,7 @@ var app = {
 // if no song is provided then your program will default to
 // "The Sign" by Ace of Base
 
-  "spotify-this-song": function doIt() {
+  "spotify-this-song": function () {
 
         spotify.search({ type: 'track', query: (query || "The Sign Ace of Base") }, function(err, data){
          var record = data.tracks.items[0];
@@ -125,10 +125,8 @@ var app = {
        
         var work = data.split(',');
         console.log(work)
-      // doIt(work[0]);
-      // work.push().app[process.argv[2]](process.argv[3]);
-      
-                
+        // 
+
        app.saveData(work)
       });
     },
